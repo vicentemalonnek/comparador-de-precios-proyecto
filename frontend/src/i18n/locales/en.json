@@ -1,0 +1,16 @@
+{
+  "app": {
+    "title": "PC Price Comparator",
+    "backendStatus": "Backend status: {{status}}"
+  },
+  "status": {
+    "loading": "loading...",
+    "ok": "ok",
+    "unreachable": "unreachable"
+  },
+  "language": {
+    "label": "Language",
+    "es": "Spanish",
+    "en": "English"
+  }
+}

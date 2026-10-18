@@ -1,0 +1,16 @@
+{
+  "app": {
+    "title": "Comparador de Precios de PC",
+    "backendStatus": "Estado del backend: {{status}}"
+  },
+  "status": {
+    "loading": "cargando...",
+    "ok": "operativo",
+    "unreachable": "sin conexión"
+  },
+  "language": {
+    "label": "Idioma",
+    "es": "Español",
+    "en": "Inglés"
+  }
+}

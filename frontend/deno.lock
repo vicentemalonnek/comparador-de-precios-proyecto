@@ -10,7 +10,9 @@
     "npm:eslint-plugin-react-refresh@~0.5.6": "0.5.7_eslint@10.12.0",
     "npm:eslint@^10.10.0": "10.12.0",
     "npm:globals@^17.12.0": "17.13.0",
+    "npm:i18next@^26.5.0": "26.5.0_typescript@6.0.3",
     "npm:react-dom@^19.2.8": "19.3.0_react@19.3.0",
+    "npm:react-i18next@^17.1.0": "17.1.0_i18next@26.5.0_react@19.3.0_typescript@6.0.3",
     "npm:react@^19.2.8": "19.3.0",
     "npm:typescript-eslint@^8.69.0": "8.71.1_eslint@10.12.0_typescript@6.0.3",
     "npm:typescript@~6.0.2": "6.0.3",
@@ -109,6 +111,9 @@
         "@babel/types"
       ],
       "bin": true
+    },
+    "@babel/runtime@7.29.10": {
+      "integrity": "sha512-NpugTzbKgGrNe45Ui32cN8vCFFMxVtP/9rtfwv0nP5FRDAjvYBxJcLVpYA9mr1jxP6cnIT7x9LUzuDTbWYYNRA=="
     },
     "@babel/template@7.29.7": {
       "integrity": "sha512-puq+Gf35oI24FeN11LkoUQFqv9uwNeWpxXZi/Ji3rRIoKAzKnxRaZ+Gkj0vKS9ZCiTESfng1N9LyOyXvo+m+Gg==",
@@ -741,6 +746,18 @@
     "hookified@2.2.0": {
       "integrity": "sha512-p/LgFzRN5FeoD3DLS6bkUapeye6E4SI6yJs6KetENd18S+FBthqYq2amJUWpt5z0EQwwHemidjY5OqJGEKm5uA=="
     },
+    "html-parse-stringify@4.0.1": {
+      "integrity": "sha512-0zHsZJrK7S3K2aucXWL6ycoYJ/iNtIcFHC/nYQgFklPtrv5LpJctIiSCroWZWeuoXvuyFdzp6KzjJQ+OT5MfFw=="
+    },
+    "i18next@26.5.0_typescript@6.0.3": {
+      "integrity": "sha512-OwFFD3ER/BSWsv40teDtkhG7fwgncd7cq1CX7el02IENW9ZiwfWLnMjsQGD/q3SExrxp0+QxwUqXL8F9BKu5+w==",
+      "dependencies": [
+        "typescript"
+      ],
+      "optionalPeers": [
+        "typescript"
+      ]
+    },
     "ignore@5.3.2": {
       "integrity": "sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g=="
     },
@@ -959,6 +976,20 @@
         "scheduler"
       ]
     },
+    "react-i18next@17.1.0_i18next@26.5.0_react@19.3.0_typescript@6.0.3": {
+      "integrity": "sha512-4VouOnTDyvhvqXx6WZ+s3/cgSiaLutILdYkO3P1Ms+4qcKR7At+JP4Vi7IeHkVLyVV+DmN1l23Pn73UcwSGGPA==",
+      "dependencies": [
+        "@babel/runtime",
+        "html-parse-stringify",
+        "i18next",
+        "react",
+        "typescript",
+        "use-sync-external-store"
+      ],
+      "optionalPeers": [
+        "typescript"
+      ]
+    },
     "react@19.3.0": {
       "integrity": "sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog=="
     },
@@ -1062,6 +1093,12 @@
         "punycode"
       ]
     },
+    "use-sync-external-store@1.7.0_react@19.3.0": {
+      "integrity": "sha512-6L+EeigHMQhdaIPNIFUKwfWJSwWFQ8gJbJ2DLOs5sDIegTwR9fRxvnM3uciHKjIZhFz+KAv2emhWMRvDmMcY8A==",
+      "dependencies": [
+        "react"
+      ]
+    },
     "vite@8.3.3_@types+node@24.19.1": {
       "integrity": "sha512-cTAldKPImjg6c+gk48U19POPn3GCBzZwpdsN8ZMEEcbpes+6/wvfqUd0C2y3qYY4wsj8PwgFwrZ/1jBPVttMSg==",
       "dependencies": [
@@ -1118,7 +1155,9 @@
         "npm:eslint-plugin-react-refresh@~0.5.6",
         "npm:eslint@^10.10.0",
         "npm:globals@^17.12.0",
+        "npm:i18next@^26.5.0",
         "npm:react-dom@^19.2.8",
+        "npm:react-i18next@^17.1.0",
         "npm:react@^19.2.8",
         "npm:typescript-eslint@^8.69.0",
         "npm:typescript@~6.0.2",
