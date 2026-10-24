@@ -41,3 +41,4 @@ The assignment asks for 3 categories out of the listed ones. Proposed (to be con
 |------|----------|-------|
 | 2026-10-08 | Stack: Deno (backend) + React (frontend) | |
 | 2026-10-24 | Database: SQLite | Single file, no setup; relational model for price history |
+| 2026-10-24 | SP Digital discarded as a source | Cloudflare returns 403 to automated requests; see docs/DATA_SOURCES.md |
