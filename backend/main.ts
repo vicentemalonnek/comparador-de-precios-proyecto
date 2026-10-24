@@ -1,3 +1,7 @@
+import { db } from "./src/db/client.ts";
+
+
+
 const port = Number(Deno.env.get("PORT") ?? 8000);
 
 const allowedOrigins = (
@@ -32,7 +36,8 @@ Deno.serve({ port }, (req: Request): Response => {
   const url = new URL(req.url);
 
   if (url.pathname === "/health") {
-    return Response.json({ status: "ok" }, { headers: corsHeaders });
+  db.prepare("SELECT 1").get();
+  return Response.json({ status: "ok", database: "ok" }, { headers: corsHeaders });
   }
 
   return new Response("Not found", { status: 404, headers: corsHeaders });
