@@ -40,3 +40,4 @@ The assignment asks for 3 categories out of the listed ones. Proposed (to be con
 | Date | Decision | Notes |
 |------|----------|-------|
 | 2026-10-08 | Stack: Deno (backend) + React (frontend) | |
+| 2026-10-24 | Database: SQLite | Single file, no setup; relational model for price history |
