@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS products (
   category   TEXT NOT NULL CHECK (category IN ('gpu', 'ram', 'ssd')),
   brand      TEXT,
   model      TEXT,
+  mpn        TEXT,
   specs      TEXT,                  -- JSON string with category-specific specs
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -27,7 +28,9 @@ CREATE TABLE IF NOT EXISTS listings (
   product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
   store_id   INTEGER NOT NULL REFERENCES stores(id) ON DELETE CASCADE,
   url        TEXT NOT NULL,
-  UNIQUE (product_id, store_id)
+  external_id TEXT NOT NULL,
+  UNIQUE (product_id, store_id),
+  UNIQUE (store_id, external_id)
 );
 
 -- One row per scrape: this is what makes the price history possible
@@ -35,6 +38,7 @@ CREATE TABLE IF NOT EXISTS prices (
   id         INTEGER PRIMARY KEY AUTOINCREMENT,
   listing_id INTEGER NOT NULL REFERENCES listings(id) ON DELETE CASCADE,
   price      INTEGER NOT NULL,      -- CLP has no decimals
+  cash_price INTEGER,
   currency   TEXT NOT NULL DEFAULT 'CLP',
   scraped_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -50,3 +54,4 @@ CREATE TABLE IF NOT EXISTS stock (
 CREATE INDEX IF NOT EXISTS idx_prices_listing_date ON prices (listing_id, scraped_at);
 CREATE INDEX IF NOT EXISTS idx_stock_listing_date  ON stock (listing_id, checked_at);
 CREATE INDEX IF NOT EXISTS idx_products_category   ON products (category);
+CREATE INDEX IF NOT EXISTS idx_products_mpn ON products (mpn);
