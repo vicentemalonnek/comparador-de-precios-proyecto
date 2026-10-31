@@ -34,6 +34,10 @@ curl.exe -s -L -A "Mozilla/5.0" -o test.html -w "status: %{http_code}  bytes: %{
 - Per-store stock is published on the site, but `/producto/tiendas` is disallowed in robots.txt, so it is not used.
 - Decision: use as a source with minimal usage: one pass per day, 1 to 2 seconds between requests, identifying `User-Agent`, only factual data (name, price, availability, URL) and a link to the source page. Not the only source.
 
+- `sitemap.xml`: flat list (no index), 1513 URLs, 1202 of them products. It is incomplete: a known product (id 56531) is not listed. Coverage by category: RAM about 25, internal SSD about 40, CPU about 30, GPU almost none.
+- The price API answers for products that are in the sitemap and for ones that are not. Scanning id ranges is not acceptable (too many unnecessary requests).
+- Decision: categories RAM, SSD and CPU (GPU may be added later with a hand-picked list of ids).
+
 ## Other stores
 
 - Pending: test at least 2 more stores (requirement: at least 3 sources).
