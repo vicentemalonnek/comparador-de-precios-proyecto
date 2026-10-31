@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS stores (
 CREATE TABLE IF NOT EXISTS products (
   id         INTEGER PRIMARY KEY AUTOINCREMENT,
   name       TEXT NOT NULL,
-  category   TEXT NOT NULL CHECK (category IN ('gpu', 'ram', 'ssd')),
+  category   TEXT NOT NULL CHECK (category IN ('cpu', 'gpu', 'ram', 'ssd')),
   brand      TEXT,
   model      TEXT,
   mpn        TEXT,

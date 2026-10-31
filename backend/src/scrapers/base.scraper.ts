@@ -1,4 +1,4 @@
-export type ProductCategory = "gpu" | "ram" | "ssd";
+export type ProductCategory = "cpu" | "gpu" | "ram" | "ssd";
 
 export interface ScrapedProduct {
   externalId: string; // the store's own product id
