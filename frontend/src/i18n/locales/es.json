@@ -1,16 +1,30 @@
 {
   "app": {
     "title": "Comparador de Precios de PC",
-    "backendStatus": "Estado del backend: {{status}}"
-  },
-  "status": {
-    "loading": "cargando...",
-    "ok": "operativo",
-    "unreachable": "sin conexión"
+    "subtitle": "Compara precios de procesadores, memorias RAM y SSD"
   },
   "language": {
     "label": "Idioma",
     "es": "Español",
     "en": "Inglés"
+  },
+  "categories": {
+    "all": "Todas",
+    "cpu": "Procesadores",
+    "gpu": "Tarjetas de video",
+    "ram": "Memoria RAM",
+    "ssd": "SSD"
+  },
+  "products": {
+    "filterLabel": "Filtrar por categoría",
+    "loading": "Cargando productos...",
+    "error": "No se pudo conectar con el servidor.",
+    "empty": "No hay productos para esta categoría.",
+    "normalPrice": "Precio normal",
+    "cashPrice": "Precio efectivo",
+    "viewInStore": "Ver en {{store}}",
+    "updated": "Actualizado: {{date}}",
+    "count_one": "{{count}} producto",
+    "count_other": "{{count}} productos"
   }
 }

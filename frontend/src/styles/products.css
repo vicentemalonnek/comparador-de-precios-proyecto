@@ -1,0 +1,92 @@
+.pc-app {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1rem;
+  text-align: left;
+}
+
+.pc-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.pc-header h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.pc-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.pc-chip {
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.pc-chip--active {
+  border-color: #646cff;
+  background: #646cff;
+  color: #fff;
+}
+
+/* One column on phones, more columns as the screen grows */
+.pc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pc-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem;
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  border-radius: 0.75rem;
+}
+
+.pc-card__category {
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.pc-card__name {
+  margin: 0;
+  font-size: 1rem;
+  text-transform: capitalize;
+  overflow-wrap: anywhere;
+}
+
+.pc-card__price {
+  margin: 0.5rem 0 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.pc-card__meta {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+.pc-card__link {
+  margin-top: auto;
+  padding-top: 0.75rem;
+}
