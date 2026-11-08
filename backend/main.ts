@@ -1,5 +1,5 @@
 import { db } from "./src/db/client.ts";
-
+import { listProducts } from "./src/services/product.service.ts";
 
 
 const port = Number(Deno.env.get("PORT") ?? 8000);
@@ -39,6 +39,11 @@ Deno.serve({ port }, (req: Request): Response => {
   db.prepare("SELECT 1").get();
   return Response.json({ status: "ok", database: "ok" }, { headers: corsHeaders });
   }
+  
+  if (url.pathname === "/api/products" && req.method === "GET") {
+  const category = url.searchParams.get("category");
+  return Response.json(listProducts(category), { headers: corsHeaders });
+}
 
   return new Response("Not found", { status: 404, headers: corsHeaders });
 });
