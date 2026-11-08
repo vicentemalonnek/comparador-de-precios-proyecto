@@ -1,6 +1,6 @@
 import { db } from "./src/db/client.ts";
 import { listProducts } from "./src/services/product.service.ts";
-
+import { handleAuthRequest } from "./src/routes/auth.routes.ts";
 
 const port = Number(Deno.env.get("PORT") ?? 8000);
 
@@ -20,12 +20,14 @@ function getCorsHeaders(req: Request): Record<string, string> {
   // Echo the origin back only if it is in the allowed list
   if (allowedOrigins.includes(origin)) {
     headers["Access-Control-Allow-Origin"] = origin;
+    // Lets the browser send and accept the session cookie
+    headers["Access-Control-Allow-Credentials"] = "true";
   }
 
   return headers;
 }
 
-Deno.serve({ port }, (req: Request): Response => {
+Deno.serve({ port }, async (req: Request): Promise<Response> => {
   const corsHeaders = getCorsHeaders(req);
 
   // Browsers send an OPTIONS "preflight" request before some cross-origin calls
@@ -36,14 +38,20 @@ Deno.serve({ port }, (req: Request): Response => {
   const url = new URL(req.url);
 
   if (url.pathname === "/health") {
-  db.prepare("SELECT 1").get();
-  return Response.json({ status: "ok", database: "ok" }, { headers: corsHeaders });
+    db.prepare("SELECT 1").get();
+    return Response.json(
+      { status: "ok", database: "ok" },
+      { headers: corsHeaders },
+    );
   }
-  
+
   if (url.pathname === "/api/products" && req.method === "GET") {
-  const category = url.searchParams.get("category");
-  return Response.json(listProducts(category), { headers: corsHeaders });
-}
+    const category = url.searchParams.get("category");
+    return Response.json(listProducts(category), { headers: corsHeaders });
+  }
+
+  const authResponse = await handleAuthRequest(req, url, corsHeaders);
+  if (authResponse) return authResponse;
 
   return new Response("Not found", { status: 404, headers: corsHeaders });
 });
