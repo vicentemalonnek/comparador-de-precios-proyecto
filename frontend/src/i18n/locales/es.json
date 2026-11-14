@@ -31,5 +31,13 @@
   "login": "Iniciar sesión con Google",
   "logout": "Cerrar sesión",
   "loginError": "No se pudo iniciar sesión. Inténtalo de nuevo."
-}
+  },
+  "history": {
+  "show": "Ver historial de precios",
+  "hide": "Ocultar historial",
+  "loading": "Cargando historial...",
+  "error": "No se pudo cargar el historial.",
+  "notEnough": "Aún no hay suficientes datos para mostrar un gráfico.",
+  "chartLabel": "Historial de precios entre {{min}} y {{max}}"
+  }
 }

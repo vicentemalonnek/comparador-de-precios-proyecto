@@ -23,3 +23,21 @@ export async function fetchProducts(
   if (!response.ok) throw new Error(`Request failed (${response.status})`);
   return (await response.json()) as Product[];
 }
+
+export interface PricePoint {
+  store: string;
+  price: number;
+  cashPrice: number | null;
+  scrapedAt: string;
+}
+
+export async function fetchPriceHistory(
+  productId: number,
+  signal?: AbortSignal,
+): Promise<PricePoint[]> {
+  const response = await fetch(`${API_URL}/api/products/${productId}/prices`, {
+    signal,
+  });
+  if (!response.ok) throw new Error(`Request failed (${response.status})`);
+  return (await response.json()) as PricePoint[];
+}

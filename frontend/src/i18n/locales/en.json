@@ -31,5 +31,13 @@
   "login": "Sign in with Google",
   "logout": "Sign out",
   "loginError": "Could not sign in. Please try again."
-}
+  },
+  "history": {
+  "show": "Show price history",
+  "hide": "Hide history",
+  "loading": "Loading history...",
+  "error": "Could not load the history.",
+  "notEnough": "Not enough data yet to show a chart.",
+  "chartLabel": "Price history between {{min}} and {{max}}"
+  }
 }

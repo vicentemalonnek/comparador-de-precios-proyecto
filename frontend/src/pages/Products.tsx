@@ -2,15 +2,14 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { fetchProducts, type CategoryFilter, type Product } from "../services/api";
 import "../styles/products.css";
+import PriceHistory from "../components/PriceHistory";
+import { parseDbDate } from "../utils/date";
 
 const CATEGORIES: CategoryFilter[] = ["all", "cpu", "ram", "ssd"];
 
 type Status = "loading" | "error" | "ready";
 
-// SQLite CURRENT_TIMESTAMP is UTC and looks like "2026-11-08 14:03:21"
-function parseDbDate(value: string): Date {
-  return new Date(value.replace(" ", "T") + "Z");
-}
+
 
 export default function Products() {
   const { t, i18n } = useTranslation();
@@ -90,6 +89,7 @@ export default function Products() {
                   <p className="pc-card__meta">
                     {t("products.updated", { date: dateFormat.format(parseDbDate(p.scrapedAt)) })}
                   </p>
+                  <PriceHistory productId={p.id} />
                   <a className="pc-card__link" href={p.url} target="_blank" rel="noopener noreferrer">
                     {t("products.viewInStore", { store: p.store })}
                   </a>

@@ -128,3 +128,35 @@
   text-decoration: none;
   cursor: pointer;
 }
+.pc-history {
+  margin-top: 0.5rem;
+}
+
+.pc-link-button {
+  min-height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #646cff;
+  font: inherit;
+  text-align: left;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.pc-chart {
+  margin: 0.5rem 0 0;
+}
+
+.pc-chart svg {
+  width: 100%;
+  height: auto;
+}
+
+.pc-chart__caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
