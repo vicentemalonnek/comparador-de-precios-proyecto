@@ -33,3 +33,23 @@ export function listProducts(category: string | null): ProductSummary[] {
 
   return rows as unknown as ProductSummary[];
 }
+export interface PricePoint {
+  store: string;
+  price: number;
+  cashPrice: number | null;
+  scrapedAt: string;
+}
+
+export function getPriceHistory(productId: number): PricePoint[] {
+  const rows = db.prepare(
+    `SELECT s.name AS store, pr.price, pr.cash_price AS cashPrice,
+            pr.scraped_at AS scrapedAt
+     FROM prices pr
+     JOIN listings l ON l.id = pr.listing_id
+     JOIN stores s ON s.id = l.store_id
+     WHERE l.product_id = ?
+     ORDER BY pr.scraped_at, pr.id`,
+  ).all(productId);
+
+  return rows as unknown as PricePoint[];
+}
