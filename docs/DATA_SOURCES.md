@@ -40,7 +40,12 @@ curl.exe -s -L -A "Mozilla/5.0" -o test.html -w "status: %{http_code}  bytes: %{
 
 ## Other stores
 
-- Pending: test at least 2 more stores (requirement: at least 3 sources).
+- ## Winpy (winpy.cl): discarded
+
+- `robots.txt`: permissive. Only cart, quotes, admin routes and video files are blocked. `Crawl-delay: 5`. Sitemap declared.
+- Privacy policy: about customer data; no mention of bots or scraping.
+- Plain HTTP request to a product page: **403, about 5.7 KB** (anti-bot challenge). The price is not in the response.
+- Decision: discarded, same reason as SP Digital. Bypassing the block is not acceptable for this project.
 
 ## Notes
 
