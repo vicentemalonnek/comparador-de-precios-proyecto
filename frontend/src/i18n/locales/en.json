@@ -26,5 +26,10 @@
     "updated": "Updated: {{date}}",
     "count_one": "{{count}} product",
     "count_other": "{{count}} products"
-  }
+  },
+  "auth": {
+  "login": "Sign in with Google",
+  "logout": "Sign out",
+  "loginError": "Could not sign in. Please try again."
+}
 }

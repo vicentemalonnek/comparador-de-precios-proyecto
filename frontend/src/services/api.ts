@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000";
+export const API_URL = "http://localhost:8000";
 
 export type CategoryFilter = "all" | "cpu" | "ram" | "ssd";
 
