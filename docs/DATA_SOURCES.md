@@ -53,7 +53,8 @@ curl.exe -s -L -A "Mozilla/5.0" -o test.html -w "status: %{http_code}  bytes: %{
 - Plain HTTP request to product pages (RAM and CPU tested): **200, about 165 KB**; the price is in the HTML.
 - Each product page includes `ld+json` of type `Product` with name, brand, `mpn` (manufacturer part number), price, currency, availability (`InStock`) and the product URL.
 - The `ld+json` price is higher than the displayed price by about 6% in both products tested (the displayed price is 94% of it); probably a cash/transfer discount, to be confirmed.
-- `sitemap.xml` exists (about 53 KB, flat list of product URLs `/{id}-{name}`), although it is not declared in robots.txt. Category filtering by name still needs to be defined.
+- `sitemap.xml` exists (129 URLs) but it is partial: it contains no processors although the store sells them (a tested CPU page is not listed), and it mixes accessories, microSD cards and server modules. Not usable as a catalog.
+- Decision: hand-picked list of product URLs (`backend/src/scrapers/lists/pcexpress-products.json`), chosen by browsing the store manually. Category comes from the list, not from the product name.
 - An AI-generated summary says no terms of use with clauses about bots were found; not verified against original texts.
 - Usage rules: one request per product, a few seconds between requests, one pass per day, identifying `User-Agent`, only factual data and a link to the source page.
 

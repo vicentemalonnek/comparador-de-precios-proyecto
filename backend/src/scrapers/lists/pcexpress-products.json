@@ -1,0 +1,39 @@
+{
+  "cpu": [
+    "https://tienda.pc-express.cl/19538-procesador-amd-ryzen-3-5300g-4-0ghz-4-core-sam4-p-n-100-100000253box",
+    "https://tienda.pc-express.cl/16429-procesador-amd-ryzen-5-7600-3-8ghzat5-1ghz-6-nucleos-12-hilos-sam5-p-n-100-100001015box",
+    "https://tienda.pc-express.cl/14359-procesador-amd-ryzen-7-5700x-3-4ghz-8-core-sam4-p-n-100-100000926wof",
+    "https://tienda.pc-express.cl/13670-procesador-intel-i5-12400-2-5ghz-s1700-p-n-bx8071512400",
+    "https://tienda.pc-express.cl/15921-procesador-amd-ryzen-5-7600x-4-7ghzat5-3ghz-6-nucleos-12-hilos-sam5-p-n-100-100000593wof",
+    "https://tienda.pc-express.cl/21725-procesador-amd-ryzen-5-7600x3d-6c-12t-4-1ghz-socket-am5-p-n-100-100001721wof",
+    "https://tienda.pc-express.cl/15919-procesador-amd-ryzen-9-7900x-4-7ghzat5-6ghz-12-nucleos-24-hilos-sam5-p-n-100-100000589wof",
+    "https://tienda.pc-express.cl/15920-procesador-amd-ryzen-7-7700x-4-5ghzat5-4ghz-8-nucleos-16-hilos-sam5-p-n-100-100000591wof",
+    "https://tienda.pc-express.cl/21724-procesador-amd-ryzen-7-7700x3d-am5-8c-16t-4-0-ghz-100-100002235wof"
+  ],
+  "ram": [
+    "https://tienda.pc-express.cl/19721-memoria-corsair-ddr4-8gb-3200mhz-vengeance-lpx-cmk8gx4m1e3200c16",
+    "https://tienda.pc-express.cl/15016-memoria-sodimm-adata-ddr4-16gb-3200mhz-pc4-25600-cl22-1-2v-p-n-ad4s320016g22-sgn",
+    "https://tienda.pc-express.cl/14991-memoria-udimm-ddr4-adata-8gb-3200-mhz-pc4-25600-1-2v-cl22-p-n-ad4u32008g22-sgn",
+    "https://tienda.pc-express.cl/14992-memoria-udimm-ddr4-adata-16gb-3200-mhz-pc4-25600-cl22-1-2v-p-n-ad4u320016g22-sgn",
+    "https://tienda.pc-express.cl/19419-memoria-kingston-ddr4-8gb-3200mhz-single-rank-p-n-kcp432ns68",
+    "https://tienda.pc-express.cl/12782-memoria-sodimm-kingston-ddr4-8gb-3200mhz-unbuffered-p-n-kvr32s22s88",
+    "https://tienda.pc-express.cl/14159-memoria-ddr4-kingston-udimm-8gb-3200-mhz-unbuffered-non-ecc-p-n-kvr32n22s6-8",
+    "https://tienda.pc-express.cl/22456-modulo-ddr4-kingston-16gb-3200mhz-cl22-dual-rank-kcp432nd8-16",
+    "https://tienda.pc-express.cl/12787-memoria-sodimm-kingston-32gb-ddr4-3200mhz-unbuffered-p-n-kcp432sd8-32",
+    "https://tienda.pc-express.cl/14179-memoria-sodimm-kingston-16gb-ddr4-3200mhz-unbuffered-p-n-kvr32s22s8-16"
+
+
+  ],
+  "ssd": [
+    "https://tienda.pc-express.cl/7888-disco-kingston-de-estado-solido-240gb-ssd-2-5-ssdnow-p-n-sa400s37-240g",
+    "https://tienda.pc-express.cl/8127-disco-kingston-de-estado-solido-ssd-480gb-a400-p-n-sa400s37-480g",
+    "https://tienda.pc-express.cl/20107-disco-crucial-de-estado-solido-ssd-bx500-4tb-p-n-ct4000bx500ssd1",
+    "https://tienda.pc-express.cl/19859-ssd-crucial-e100-480gb-nvme-pciex-4-0-m-2-2280-p-n-ct480e100ssd8",
+    "https://tienda.pc-express.cl/21230-ssd-western-digital-blue-sn5100-1tb-m-2-nvme-pcie4-0-x4",
+    "https://tienda.pc-express.cl/20798-ssd-western-digital-green-500gb-sn3000-nvme-m-2-2280-pciex-4-0-x4-p-n-wds500g4g0e",
+    "https://tienda.pc-express.cl/20549-ssd-kinsgton-1tb-nv3-m-2-2230-pcie-4-0-x4-nvme-qlc-6000-4000-snv3sm3-1t0",
+    "https://tienda.pc-express.cl/19378-ssd-nvme-m-2-kingspec-512gb-2280-pcie-pcie-3-0-x4-ne-512",
+    "https://tienda.pc-express.cl/19488-ssd-sata-kingspec-256gb-sata-iii-p-n-p3-256",
+    "https://tienda.pc-express.cl/17545-ssd-msi-480gb-2-5-spatium-s270-sata-p-n-s78-440e350-p83"
+  ]
+}

@@ -47,3 +47,4 @@ GPU was considered first, but the main source (PC Factory) lists almost none in 
 | 2026-10-31 | PC Factory as first source | Internal price API answers plain requests; grey area, minimal usage; see docs/DATA_SOURCES.md |
 | 2026-10-31 | Categories: CPU, RAM and SSD instead of GPU | The PC Factory sitemap has almost no GPU products |
 | 2026-10-31 | Scraping rules | One pass per day, pause between requests, identifying User-Agent, only factual data (name, price, availability, URL) |
+| 2026-11-14 | PC Express as second source with a hand-picked product list | Winpy and SP Digital block automated requests; PC Express exposes price, mpn and availability as JSON-LD; see docs/DATA_SOURCES.md |
