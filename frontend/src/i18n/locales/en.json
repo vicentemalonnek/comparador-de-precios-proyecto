@@ -15,18 +15,25 @@
     "ram": "RAM",
     "ssd": "SSD"
   },
-  "products": {
-    "filterLabel": "Filter by category",
-    "loading": "Loading products...",
-    "error": "Could not reach the server.",
-    "empty": "There are no products in this category.",
-    "normalPrice": "Normal price",
-    "cashPrice": "Cash price",
-    "viewInStore": "View at {{store}}",
-    "updated": "Updated: {{date}}",
-    "count_one": "{{count}} product",
-    "count_other": "{{count}} products"
+"products": {
+  "filterLabel": "Filter by category",
+  "onlyCompared": "Only products available in several stores",
+  "loading": "Loading products...",
+  "error": "Could not reach the server.",
+  "empty": "There are no products in this category.",
+  "cheapest": "Cheapest",
+  "difference": "Difference between stores: {{amount}}",
+  "cashPrice": "Cash price",
+  "stock": {
+    "in": "In stock",
+    "out": "Out of stock",
+    "unknown": "Stock not reported"
   },
+  "viewInStore": "View at {{store}}",
+  "updated": "Updated: {{date}}",
+  "count_one": "{{count}} product",
+  "count_other": "{{count}} products"
+},
   "auth": {
   "login": "Sign in with Google",
   "logout": "Sign out",

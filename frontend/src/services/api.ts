@@ -41,3 +41,32 @@ export async function fetchPriceHistory(
   if (!response.ok) throw new Error(`Request failed (${response.status})`);
   return (await response.json()) as PricePoint[];
 }
+
+
+export interface ComparisonOffer {
+  productId: number;
+  store: string;
+  url: string;
+  price: number;
+  cashPrice: number | null;
+  inStock: boolean | null;
+  scrapedAt: string;
+}
+
+export interface Comparison {
+  key: string;
+  name: string;
+  category: string;
+  brand: string | null;
+  offers: ComparisonOffer[]; // cheapest first
+}
+
+export async function fetchComparisons(
+  category: CategoryFilter,
+  signal?: AbortSignal,
+): Promise<Comparison[]> {
+  const query = category === "all" ? "" : `?category=${category}`;
+  const response = await fetch(`${API_URL}/api/comparisons${query}`, { signal });
+  if (!response.ok) throw new Error(`Request failed (${response.status})`);
+  return (await response.json()) as Comparison[];
+}

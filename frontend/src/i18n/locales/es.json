@@ -15,18 +15,25 @@
     "ram": "Memoria RAM",
     "ssd": "SSD"
   },
-  "products": {
-    "filterLabel": "Filtrar por categoría",
-    "loading": "Cargando productos...",
-    "error": "No se pudo conectar con el servidor.",
-    "empty": "No hay productos para esta categoría.",
-    "normalPrice": "Precio normal",
-    "cashPrice": "Precio efectivo",
-    "viewInStore": "Ver en {{store}}",
-    "updated": "Actualizado: {{date}}",
-    "count_one": "{{count}} producto",
-    "count_other": "{{count}} productos"
+"products": {
+  "filterLabel": "Filtrar por categoría",
+  "onlyCompared": "Solo productos disponibles en varias tiendas",
+  "loading": "Cargando productos...",
+  "error": "No se pudo conectar con el servidor.",
+  "empty": "No hay productos para esta categoría.",
+  "cheapest": "Más barato",
+  "difference": "Diferencia entre tiendas: {{amount}}",
+  "cashPrice": "Precio efectivo",
+  "stock": {
+    "in": "En stock",
+    "out": "Sin stock",
+    "unknown": "Stock no informado"
   },
+  "viewInStore": "Ver en {{store}}",
+  "updated": "Actualizado: {{date}}",
+  "count_one": "{{count}} producto",
+  "count_other": "{{count}} productos"
+},
   "auth": {
   "login": "Iniciar sesión con Google",
   "logout": "Cerrar sesión",

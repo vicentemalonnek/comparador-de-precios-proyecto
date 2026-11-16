@@ -1,26 +1,28 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { fetchProducts, type CategoryFilter, type Product } from "../services/api";
+import ProductCard from "../components/ProductCard";
+import {
+  type CategoryFilter,
+  type Comparison,
+  fetchComparisons,
+} from "../services/api";
 import "../styles/products.css";
-import PriceHistory from "../components/PriceHistory";
-import { parseDbDate } from "../utils/date";
 
 const CATEGORIES: CategoryFilter[] = ["all", "cpu", "ram", "ssd"];
 
 type Status = "loading" | "error" | "ready";
 
-
-
 export default function Products() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [category, setCategory] = useState<CategoryFilter>("all");
-  const [products, setProducts] = useState<Product[]>([]);
+  const [onlyCompared, setOnlyCompared] = useState(false);
+  const [products, setProducts] = useState<Comparison[]>([]);
   const [status, setStatus] = useState<Status>("loading");
 
   useEffect(() => {
     const controller = new AbortController();
 
-    fetchProducts(category, controller.signal)
+    fetchComparisons(category, controller.signal)
       .then((data) => {
         setProducts(data);
         setStatus("ready");
@@ -40,13 +42,9 @@ export default function Products() {
     setCategory(next);
   };
 
-  const locale = i18n.resolvedLanguage === "en" ? "en-US" : "es-CL";
-  const money = new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: "CLP",
-    maximumFractionDigits: 0,
-  });
-  const dateFormat = new Intl.DateTimeFormat(locale, { dateStyle: "medium" });
+  const visible = onlyCompared
+    ? products.filter((p) => p.offers.length > 1)
+    : products;
 
   return (
     <section>
@@ -64,36 +62,28 @@ export default function Products() {
         ))}
       </div>
 
+      <label className="pc-toggle">
+        <input
+          type="checkbox"
+          checked={onlyCompared}
+          onChange={(event) => setOnlyCompared(event.target.checked)}
+        />
+        {t("products.onlyCompared")}
+      </label>
+
       {status === "loading" && <p role="status">{t("products.loading")}</p>}
       {status === "error" && <p role="alert">{t("products.error")}</p>}
 
       {status === "ready" && (
         <>
-          <p className="pc-count">{t("products.count", { count: products.length })}</p>
+          <p className="pc-count">{t("products.count", { count: visible.length })}</p>
 
-          {products.length === 0 ? (
+          {visible.length === 0 ? (
             <p>{t("products.empty")}</p>
           ) : (
             <ul className="pc-grid">
-              {products.map((p) => (
-                <li key={`${p.id}-${p.store}`} className="pc-card">
-                  <span className="pc-card__category">{t(`categories.${p.category}`)}</span>
-                  <h3 className="pc-card__name">{p.name}</h3>
-                  <p className="pc-card__price">{money.format(p.price)}</p>
-                  <p className="pc-card__meta">{t("products.normalPrice")}</p>
-                  {p.cashPrice !== null && (
-                    <p className="pc-card__meta">
-                      {t("products.cashPrice")}: {money.format(p.cashPrice)}
-                    </p>
-                  )}
-                  <p className="pc-card__meta">
-                    {t("products.updated", { date: dateFormat.format(parseDbDate(p.scrapedAt)) })}
-                  </p>
-                  <PriceHistory productId={p.id} />
-                  <a className="pc-card__link" href={p.url} target="_blank" rel="noopener noreferrer">
-                    {t("products.viewInStore", { store: p.store })}
-                  </a>
-                </li>
+              {visible.map((product) => (
+                <ProductCard key={product.key} product={product} />
               ))}
             </ul>
           )}
