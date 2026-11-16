@@ -5,6 +5,7 @@ import {
   listProducts,
 } from "./src/services/product.service.ts";
 import { handleAuthRequest } from "./src/routes/auth.routes.ts";
+import { listBranches } from "./src/services/branch.service.ts";
 
 const port = Number(Deno.env.get("PORT") ?? 8000);
 
@@ -64,10 +65,14 @@ Deno.serve({ port }, async (req: Request): Promise<Response> => {
     { headers: corsHeaders },
   );
   }
-  
+
   if (url.pathname === "/api/comparisons" && req.method === "GET") {
   const category = url.searchParams.get("category");
   return Response.json(listComparisons(category), { headers: corsHeaders });
+  }
+
+  if (url.pathname === "/api/branches" && req.method === "GET") {
+  return Response.json(listBranches(), { headers: corsHeaders });
   }
 
   return new Response("Not found", { status: 404, headers: corsHeaders });

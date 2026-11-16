@@ -1,0 +1,56 @@
+[
+  {
+    "store": "PC Factory",
+    "websiteUrl": "https://www.pcfactory.cl",
+    "name": "Huerfanos",
+    "address": "Huérfanos 1081, 8320186 Santiago, Región Metropolitana",
+    "latitude": -33.43428574319834,
+    "longitude": -70.65016673244756,
+    "openingHours": "Lun-Vie 9:30-19:00, Sab 10:00-14:00"
+  },
+    {
+    "store": "PC Factory",
+    "websiteUrl": "https://www.pcfactory.cl",
+    "name": "Costanera",
+    "address": "Av. Andrés Bello 2447, 7510689 Santiago, Providencia, Región Metropolitana",
+    "latitude": -33.41395505412836,
+    "longitude": -70.60761599097803,
+    "openingHours": "Lun-Dom 10:00-20:30"
+  },
+    {
+    "store": "PC Factory",
+    "websiteUrl": "https://www.pcfactory.cl",
+    "name": "Manuel Montt",
+    "address": "Manuel Montt 170, 7500591 Providencia, Santiago, Región Metropolitana",
+    "latitude": -33.430125164189846,
+    "longitude": -70.61918442322359,
+    "openingHours": "Lun-Vie 9:30-19:00, Sab 10:00-14:00"
+  },
+    {
+    "store": "PC Factory",
+    "websiteUrl": "https://www.pcfactory.cl",
+    "name": "Parque Arauco",
+    "address": "Av. Pdte. Kennedy 5601, 7560356 Santiago, Las Condes, Región Metropolitana",
+    "latitude": -33.400179093528,
+    "longitude": -70.57585858755029,
+    "openingHours": "Lun-Vie 9:30-19:00, Sab 10:00-14:00"
+  },
+    {
+    "store": "PC Factory",
+    "websiteUrl": "https://www.pcfactory.cl",
+    "name": "Viña del Mar",
+    "address": "Av. Valparaíso 459, Viña del Mar, Valparaíso",
+    "latitude": -33.02429854803127,
+    "longitude": -71.55611669333543,
+    "openingHours": "Lun-Vie 9:30-19:00, Sab 10:00-14:00"
+  },
+  {
+    "store": "PC Express",
+    "websiteUrl": "https://tienda.pc-express.cl",
+    "name": "Casa Matriz",
+    "address": "Almte. Zegers 784, 7500717 Providencia, Región Metropolitana, Chile",
+    "latitude": -33.43380295550578,
+    "longitude": -70.6237302883553,
+    "openingHours": "Lun-Vie 9:30-14:00, 15:00-18:30"
+  }
+]

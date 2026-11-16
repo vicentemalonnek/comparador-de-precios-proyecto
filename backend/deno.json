@@ -4,6 +4,7 @@
     "start": "deno run --env-file=.env --allow-net --allow-env --allow-read --allow-write main.ts",
     "scrape:pcfactory": "deno run --allow-net --allow-env --allow-read --allow-write scripts/scrape-pcfactory.ts",
     "scrape:pcexpress": "deno run --allow-net --allow-env --allow-read --allow-write scripts/scrape-pcexpress.ts",
-    "scrape:all": "deno task scrape:pcfactory && deno task scrape:pcexpress"
+    "scrape:all": "deno task scrape:pcfactory && deno task scrape:pcexpress",
+    "seed:branches": "deno run --allow-env --allow-read --allow-write scripts/seed-branches.ts"
   }
 }
