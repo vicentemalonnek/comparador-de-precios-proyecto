@@ -1,5 +1,9 @@
 import { db } from "./src/db/client.ts";
-import { getPriceHistory, listProducts } from "./src/services/product.service.ts";
+import {
+  getPriceHistory,
+  listComparisons,
+  listProducts,
+} from "./src/services/product.service.ts";
 import { handleAuthRequest } from "./src/routes/auth.routes.ts";
 
 const port = Number(Deno.env.get("PORT") ?? 8000);
@@ -59,7 +63,12 @@ Deno.serve({ port }, async (req: Request): Promise<Response> => {
     getPriceHistory(Number(historyMatch[1])),
     { headers: corsHeaders },
   );
-}
+  }
+  
+  if (url.pathname === "/api/comparisons" && req.method === "GET") {
+  const category = url.searchParams.get("category");
+  return Response.json(listComparisons(category), { headers: corsHeaders });
+  }
 
   return new Response("Not found", { status: 404, headers: corsHeaders });
 });
