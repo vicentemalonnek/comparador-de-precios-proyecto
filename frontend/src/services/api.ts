@@ -70,3 +70,19 @@ export async function fetchComparisons(
   if (!response.ok) throw new Error(`Request failed (${response.status})`);
   return (await response.json()) as Comparison[];
 }
+
+export interface Branch {
+  id: number;
+  store: string;
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  openingHours: string | null;
+}
+
+export async function fetchBranches(signal?: AbortSignal): Promise<Branch[]> {
+  const response = await fetch(`${API_URL}/api/branches`, { signal });
+  if (!response.ok) throw new Error(`Request failed (${response.status})`);
+  return (await response.json()) as Branch[];
+}

@@ -3,10 +3,17 @@ import type { Comparison } from "../services/api";
 import { useFormatters } from "../hooks/useFormatters";
 import { parseDbDate } from "../utils/date";
 import PriceHistory from "./PriceHistory";
+import type { NearestByStore } from "../utils/distance";
 
-export default function ProductCard({ product }: { product: Comparison }) {
+export default function ProductCard({
+  product,
+  nearest,
+}: {
+  product: Comparison;
+  nearest: NearestByStore;
+}) {
   const { t } = useTranslation();
-  const { money, date } = useFormatters();
+  const { money, km, date } = useFormatters();
 
   const { offers } = product;
   const cheapest = offers[0].price;
@@ -50,6 +57,14 @@ export default function ProductCard({ product }: { product: Comparison }) {
                 </p>
               )}
               <p className="pc-card__meta">{stockLabel}</p>
+                {nearest[offer.store] && (
+                  <p className="pc-card__meta">
+                    {t("geo.nearestBranch", {
+                      name: nearest[offer.store].name,
+                      km: km.format(nearest[offer.store].km),
+              })}
+              </p>
+            )}
               <p className="pc-card__meta">
                 {t("products.updated", {
                   date: date.format(parseDbDate(offer.scrapedAt)),

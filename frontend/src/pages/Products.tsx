@@ -1,11 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import NearbyStores from "../components/NearbyStores";
 import ProductCard from "../components/ProductCard";
+import { useGeolocation } from "../hooks/useGeolocation";
 import {
+  type Branch,
   type CategoryFilter,
   type Comparison,
+  fetchBranches,
   fetchComparisons,
 } from "../services/api";
+import { type NearestByStore, nearestByStore } from "../utils/distance";
 import "../styles/products.css";
 
 const CATEGORIES: CategoryFilter[] = ["all", "cpu", "ram", "ssd"];
@@ -18,6 +23,9 @@ export default function Products() {
   const [onlyCompared, setOnlyCompared] = useState(false);
   const [products, setProducts] = useState<Comparison[]>([]);
   const [status, setStatus] = useState<Status>("loading");
+  const [branches, setBranches] = useState<Branch[]>([]);
+  const { position, status: geoStatus, request: requestLocation } =
+    useGeolocation();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -36,6 +44,24 @@ export default function Products() {
     return () => controller.abort();
   }, [category]);
 
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetchBranches(controller.signal)
+      .then(setBranches)
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        setBranches([]); // the page still works without branches
+      });
+
+    return () => controller.abort();
+  }, []);
+
+  const nearest = useMemo<NearestByStore>(
+    () => (position ? nearestByStore(branches, position) : {}),
+    [branches, position],
+  );
+
   const selectCategory = (next: CategoryFilter) => {
     if (next === category) return;
     setStatus("loading");
@@ -48,6 +74,13 @@ export default function Products() {
 
   return (
     <section>
+      <NearbyStores
+        branches={branches}
+        position={position}
+        status={geoStatus}
+        onRequest={requestLocation}
+      />
+
       <div className="pc-filters" role="group" aria-label={t("products.filterLabel")}>
         {CATEGORIES.map((c) => (
           <button
@@ -83,7 +116,7 @@ export default function Products() {
           ) : (
             <ul className="pc-grid">
               {visible.map((product) => (
-                <ProductCard key={product.key} product={product} />
+                <ProductCard key={product.key} product={product} nearest={nearest} />
               ))}
             </ul>
           )}

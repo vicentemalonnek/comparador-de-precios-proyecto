@@ -46,5 +46,18 @@
   "error": "Could not load the history.",
   "notEnough": "Not enough data yet to show a chart.",
   "chartLabel": "Price history between {{min}} and {{max}}"
+  },
+  "geo": {
+  "title": "Nearby branches",
+  "privacy": "Your location is only used in your browser to compute distances and is never sent to a server.",
+  "use": "Use my location",
+  "refresh": "Update my location",
+  "locating": "Finding your location...",
+  "denied": "Location permission was denied. You can enable it in the browser settings.",
+  "unavailable": "Could not get your location. Check that location services are turned on.",
+  "distance": "{{km}} km",
+  "hours": "Hours: {{hours}}",
+  "directions": "Directions",
+  "nearestBranch": "Nearest branch: {{name}} ({{km}} km)"
   }
 }

@@ -46,5 +46,18 @@
   "error": "No se pudo cargar el historial.",
   "notEnough": "Aún no hay suficientes datos para mostrar un gráfico.",
   "chartLabel": "Historial de precios entre {{min}} y {{max}}"
+  },
+  "geo": {
+  "title": "Sucursales cercanas",
+  "privacy": "Tu ubicación se usa solo en tu navegador para calcular distancias y no se envía a ningún servidor.",
+  "use": "Usar mi ubicación",
+  "refresh": "Actualizar mi ubicación",
+  "locating": "Buscando tu ubicación...",
+  "denied": "No diste permiso para usar tu ubicación. Puedes habilitarlo en la configuración del navegador.",
+  "unavailable": "No se pudo obtener tu ubicación. Revisa que el servicio de ubicación esté activado.",
+  "distance": "{{km}} km",
+  "hours": "Horario: {{hours}}",
+  "directions": "Cómo llegar",
+  "nearestBranch": "Sucursal más cercana: {{name}} ({{km}} km)"
   }
 }
