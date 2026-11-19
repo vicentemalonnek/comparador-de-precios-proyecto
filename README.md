@@ -11,6 +11,7 @@ Web app that compares prices of PC components (processors, RAM and SSDs) across 
 - **Geolocation:** the browser computes the distance to each store branch (Haversine). The user's location is never sent to the server.
 - **Multi-language:** Spanish and English with our own translation files (react-i18next); prices, distances and dates follow the selected locale.
 - **Responsive:** works from phone to desktop.
+- **Material Design look:** color roles, elevation, shape and states follow Material Design 3, with automatic light and dark themes (tokens in `frontend/src/index.css`).
 
 ## Tech stack
 
@@ -131,7 +132,7 @@ Known limits:
 - Some product names from PC Factory are derived from the URL and look rough.
 - Runs locally; not deployed yet.
 
-Next: UI polish, scheduled daily scraping, deployment.
+Next: scheduled daily scraping, deployment.
 
 ## Credits
 

@@ -6,7 +6,7 @@ Claude (Anthropic) was used throughout the project for design discussion and as 
 
 ## Third-party libraries
 
-React, Vite, i18next / react-i18next, Deno (including its built-in node:sqlite module).
+React, Vite, i18next / react-i18next, Deno (including its built-in node:sqlite module), Roboto font (Google Fonts, Apache 2.0).
 
 ## Data sources
 

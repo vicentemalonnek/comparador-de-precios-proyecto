@@ -11,7 +11,7 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div role="group" aria-label={t("language.label")}>
+    <div className="pc-segmented" role="group" aria-label={t("language.label")}>
       {languages.map((lng) => (
         <button
           key={lng}
