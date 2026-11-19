@@ -60,7 +60,8 @@ function ramKey(n: string): string | null {
 
 function ssdKey(n: string): string | null {
   const brand = SSD_BRANDS.find((b) => new RegExp(`\\b${b}\\b`).test(n));
-  const capacity = n.match(/\b(\d{1,2}(?:\s\d{1,2})?)\s?(gb|tb)\b/);
+  // "480 gb", "1 tb" and decimals such as "1 5 tb" (normalized from "1.5 TB")
+  const capacity = n.match(/\b(\d{3,4}|\d{1,2}(?:\s\d{1,2})?)\s?(gb|tb)\b/);
   const line = SSD_LINES.find((l) => new RegExp(`\\b${l}\\b`).test(n));
   if (!brand || !capacity || !line) return null;
 
