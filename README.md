@@ -23,7 +23,6 @@ Web app that compares prices of PC components (processors, RAM and SSDs) across 
 ## Requirements
 
 - [Deno](https://deno.com) 2.x
-- Node.js 20+ (for the frontend)
 - A Google OAuth client (only for login)
 
 ## Setup
@@ -63,8 +62,8 @@ The database is created automatically at startup and the migrations in `backend/
 
 ```bash
 cd frontend
-npm install
-npm run dev               # http://localhost:5173
+deno install
+deno task dev             # http://localhost:5173
 ```
 
 Open the app at `http://localhost:5173` (not `127.0.0.1`) so the session cookie and CORS match.
@@ -78,8 +77,10 @@ Open the app at `http://localhost:5173` (not `127.0.0.1`) so the session cookie 
 | `deno task scrape:pcexpress` | backend | Scrape PC Express |
 | `deno task scrape:all` | backend | Scrape both stores |
 | `deno task seed:branches` | backend | Load branches from `seed/branches.json` |
-| `npm run lint` | frontend | ESLint |
-| `npm run build` | frontend | Type-check and production build |
+| `deno task test` | backend | Unit tests for product matching |
+| `deno task test` | frontend | Unit tests for distance calculation |
+| `deno task lint` | frontend | ESLint |
+| `deno task build` | frontend | Type-check and production build |
 
 ## API
 
@@ -122,7 +123,7 @@ The full decisions log is in `docs/REQUIREMENTS.md`.
 
 ## Project status
 
-Done: two scrapers, price history, comparison across stores, Google login, i18n (es/en), geolocation with nearest branch.
+Done: two scrapers, price history, comparison across stores, Google login, i18n (es/en), geolocation with nearest branch, unit tests for matching and distance (the tests found and fixed a bug: SSD capacities such as 480GB were not recognized).
 
 Known limits:
 - Only 2 stores; the other candidates block automated requests.
@@ -130,7 +131,7 @@ Known limits:
 - Some product names from PC Factory are derived from the URL and look rough.
 - Runs locally; not deployed yet.
 
-Next: automated tests, UI polish, scheduled daily scraping, deployment.
+Next: UI polish, scheduled daily scraping, deployment.
 
 ## Credits
 
