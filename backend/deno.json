@@ -1,5 +1,6 @@
 {
   "tasks": {
+    "test": "deno test",
     "dev": "deno run --watch --env-file=.env --allow-net --allow-env --allow-read --allow-write main.ts",
     "start": "deno run --env-file=.env --allow-net --allow-env --allow-read --allow-write main.ts",
     "scrape:pcfactory": "deno run --allow-net --allow-env --allow-read --allow-write scripts/scrape-pcfactory.ts",
