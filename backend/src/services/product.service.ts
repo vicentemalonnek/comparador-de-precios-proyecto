@@ -77,8 +77,8 @@ export async function listComparisons(
       }))
       .sort((a, b) => a.price - b.price);
 
-    // Prefer the PC Express name: it comes from structured data, not from a URL
-    const main = group.find((p) => p.store === "PC Express") ?? group[0];
+    // Prefer a name from structured data: PC Factory names are built from URLs
+    const main = group.find((p) => p.store !== "PC Factory") ?? group[0];
     return {
       key: `${main.category}-${main.id}`,
       name: main.name,
