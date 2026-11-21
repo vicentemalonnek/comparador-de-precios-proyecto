@@ -83,6 +83,20 @@ Open the app at `http://localhost:5173` (not `127.0.0.1`) so the session cookie 
 | `deno task lint` | frontend | ESLint |
 | `deno task build` | frontend | Type-check and production build |
 
+## Daily scraping
+
+Each scrape appends new prices, so running it once a day builds the history shown in the charts. To automate it on Windows, register a scheduled task once (PowerShell, from the repository root):
+
+```powershell
+$script = (Resolve-Path backend\scripts\run-daily-scrape.ps1).Path
+$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$script`""
+$trigger = New-ScheduledTaskTrigger -Daily -At 12:00
+$settings = New-ScheduledTaskSettingsSet -StartWhenAvailable
+Register-ScheduledTask -TaskName "PriceComparatorScrape" -Action $action -Trigger $trigger -Settings $settings
+```
+
+The output of every run is appended to `backend/data/scrape.log`. The task only runs while the computer is on; `StartWhenAvailable` runs it as soon as the computer wakes if a run was missed. To remove it: `Unregister-ScheduledTask -TaskName PriceComparatorScrape`.
+
 ## API
 
 | Route | Description |
@@ -124,7 +138,7 @@ The full decisions log is in `docs/REQUIREMENTS.md`.
 
 ## Project status
 
-Done: two scrapers, price history, comparison across stores, Google login, i18n (es/en), geolocation with nearest branch, unit tests for matching and distance (the tests found and fixed a bug: SSD capacities such as 480GB were not recognized).
+Done: two scrapers with a daily scheduled run, price history, comparison across stores, Google login, i18n (es/en), geolocation with nearest branch, unit tests for matching and distance (the tests found and fixed a bug: SSD capacities such as 480GB were not recognized).
 
 Known limits:
 - Only 2 stores; the other candidates block automated requests.
@@ -132,7 +146,7 @@ Known limits:
 - Some product names from PC Factory are derived from the URL and look rough.
 - Runs locally; not deployed yet.
 
-Next: scheduled daily scraping, deployment.
+Next: deployment.
 
 ## Credits
 
