@@ -1,4 +1,4 @@
-import type { DatabaseSync } from "node:sqlite";
+import type { Statement, TursoClient } from "../db/client.ts";
 import type { ScrapedProduct } from "../scrapers/base.scraper.ts";
 
 interface StoreInfo {
@@ -6,67 +6,69 @@ interface StoreInfo {
   websiteUrl: string;
 }
 
-export function saveScrapedProducts(
-  db: DatabaseSync,
+// The listing id is looked up inside the SQL, so new and existing listings are
+// handled the same way within one transaction
+const LISTING_ID =
+  "(SELECT id FROM listings WHERE store_id = ? AND external_id = ?)";
+
+export async function saveScrapedProducts(
+  db: TursoClient,
   store: StoreInfo,
   items: ScrapedProduct[],
-): number {
-  db.prepare("INSERT OR IGNORE INTO stores (name, website_url) VALUES (?, ?)")
-    .run(store.name, store.websiteUrl);
-  const storeRow = db.prepare("SELECT id FROM stores WHERE name = ?")
-    .get(store.name) as unknown as { id: number };
+): Promise<number> {
+  await db.execute(
+    "INSERT OR IGNORE INTO stores (name, website_url) VALUES (?, ?)",
+    [store.name, store.websiteUrl],
+  );
+  const { rows: storeRows } = await db.execute(
+    "SELECT id FROM stores WHERE name = ?",
+    [store.name],
+  );
+  const storeId = Number(storeRows[0].id);
 
-  const findListing = db.prepare(
-    "SELECT id FROM listings WHERE store_id = ? AND external_id = ?",
+  // Listings this store already has, so only the new products get created
+  const { rows: listingRows } = await db.execute(
+    "SELECT external_id FROM listings WHERE store_id = ?",
+    [storeId],
   );
-  const insertProduct = db.prepare(
-    "INSERT INTO products (name, category, brand, mpn) VALUES (?, ?, ?, ?)",
-  );
-  const insertListing = db.prepare(
-    "INSERT INTO listings (product_id, store_id, external_id, url) VALUES (?, ?, ?, ?)",
-  );
-  const insertPrice = db.prepare(
-    "INSERT INTO prices (listing_id, price, cash_price) VALUES (?, ?, ?)",
-  );
-  const insertStock = db.prepare(
-    "INSERT INTO stock (listing_id, in_stock) VALUES (?, ?)",
-  );
+  const known = new Set(listingRows.map((row) => String(row.external_id)));
 
-  db.exec("BEGIN");
-  try {
-    for (const item of items) {
-      let listing = findListing.get(storeRow.id, item.externalId) as unknown as
-        | { id: number }
-        | undefined;
-
-      // First time we see this product in this store: create it
-      if (!listing) {
-        const product = insertProduct.run(
-          item.name,
-          item.category,
-          item.brand,
-          item.mpn,
-        );
-        const created = insertListing.run(
-          Number(product.lastInsertRowid),
-          storeRow.id,
-          item.externalId,
-          item.url,
-        );
-        listing = { id: Number(created.lastInsertRowid) };
-      }
-
-      // Every run adds a new row, which is what builds the price history
-      insertPrice.run(listing.id, item.price, item.cashPrice);
-      if (item.inStock !== null) {
-        insertStock.run(listing.id, item.inStock ? 1 : 0);
-      }
+  const statements: Statement[] = [];
+  for (const item of items) {
+    // First time we see this product in this store: create it
+    if (!known.has(item.externalId)) {
+      known.add(item.externalId);
+      statements.push(
+        {
+          sql:
+            "INSERT INTO products (name, category, brand, mpn) VALUES (?, ?, ?, ?)",
+          args: [item.name, item.category, item.brand, item.mpn],
+        },
+        {
+          // last_insert_rowid() is the product inserted just before, on the same connection
+          sql: `INSERT INTO listings (product_id, store_id, external_id, url)
+                VALUES (last_insert_rowid(), ?, ?, ?)`,
+          args: [storeId, item.externalId, item.url],
+        },
+      );
     }
-    db.exec("COMMIT");
-  } catch (error) {
-    db.exec("ROLLBACK");
-    throw error;
+
+    // Every run adds a new row, which is what builds the price history
+    statements.push({
+      sql:
+        `INSERT INTO prices (listing_id, price, cash_price) VALUES (${LISTING_ID}, ?, ?)`,
+      args: [storeId, item.externalId, item.price, item.cashPrice],
+    });
+    if (item.inStock !== null) {
+      statements.push({
+        sql:
+          `INSERT INTO stock (listing_id, in_stock) VALUES (${LISTING_ID}, ?)`,
+        args: [storeId, item.externalId, item.inStock ? 1 : 0],
+      });
+    }
   }
 
+  // One transaction: if anything fails, nothing from this run is saved
+  await db.batch(statements);
   return items.length;
 }

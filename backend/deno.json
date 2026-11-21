@@ -1,11 +1,13 @@
 {
   "tasks": {
     "test": "deno test",
-    "dev": "deno run --watch --env-file=.env --allow-net --allow-env --allow-read --allow-write main.ts",
-    "start": "deno run --env-file=.env --allow-net --allow-env --allow-read --allow-write main.ts",
-    "scrape:pcfactory": "deno run --allow-net --allow-env --allow-read --allow-write scripts/scrape-pcfactory.ts",
-    "scrape:pcexpress": "deno run --allow-net --allow-env --allow-read --allow-write scripts/scrape-pcexpress.ts",
+    "dev": "deno run --watch --env-file=.env --allow-net --allow-env --allow-read main.ts",
+    "start": "deno run --env-file=.env --allow-net --allow-env --allow-read main.ts",
+    "migrate": "deno run --env-file=.env --allow-net --allow-env --allow-read scripts/migrate.ts",
+    "db:copy-local": "deno run --env-file=.env --allow-net --allow-env --allow-read --allow-write scripts/copy-local-to-turso.ts",
+    "scrape:pcfactory": "deno run --env-file=.env --allow-net --allow-env --allow-read scripts/scrape-pcfactory.ts",
+    "scrape:pcexpress": "deno run --env-file=.env --allow-net --allow-env --allow-read scripts/scrape-pcexpress.ts",
     "scrape:all": "deno task scrape:pcfactory && deno task scrape:pcexpress",
-    "seed:branches": "deno run --allow-env --allow-read --allow-write scripts/seed-branches.ts"
+    "seed:branches": "deno run --env-file=.env --allow-net --allow-env --allow-read scripts/seed-branches.ts"
   }
 }

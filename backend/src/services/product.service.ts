@@ -1,4 +1,4 @@
-import { db } from "../db/client.ts";
+import { getDb } from "../db/client.ts";
 import { groupOffers } from "./matching.service.ts";
 
 export interface ProductSummary {
@@ -29,11 +29,15 @@ const LATEST_PRICES_SQL = `
   )
 `;
 
-export function listProducts(category: string | null): ProductSummary[] {
-  const rows = category
-    ? db.prepare(`${LATEST_PRICES_SQL} WHERE p.category = ? ORDER BY pr.price`)
-      .all(category)
-    : db.prepare(`${LATEST_PRICES_SQL} ORDER BY p.category, pr.price`).all();
+export async function listProducts(
+  category: string | null,
+): Promise<ProductSummary[]> {
+  const { rows } = category
+    ? await getDb().execute(
+      `${LATEST_PRICES_SQL} WHERE p.category = ? ORDER BY pr.price`,
+      [category],
+    )
+    : await getDb().execute(`${LATEST_PRICES_SQL} ORDER BY p.category, pr.price`);
 
   return rows as unknown as ProductSummary[];
 }
@@ -56,8 +60,11 @@ export interface ProductComparison {
   offers: ComparisonOffer[]; // cheapest first
 }
 
-export function listComparisons(category: string | null): ProductComparison[] {
-  const comparisons = groupOffers(listProducts(category)).map((group) => {
+export async function listComparisons(
+  category: string | null,
+): Promise<ProductComparison[]> {
+  const products = await listProducts(category);
+  const comparisons = groupOffers(products).map((group) => {
     const offers = group
       .map((p): ComparisonOffer => ({
         productId: p.id,
@@ -96,8 +103,10 @@ export interface PricePoint {
   scrapedAt: string;
 }
 
-export function getPriceHistory(productId: number): PricePoint[] {
-  const rows = db.prepare(
+export async function getPriceHistory(
+  productId: number,
+): Promise<PricePoint[]> {
+  const { rows } = await getDb().execute(
     `SELECT s.name AS store, pr.price, pr.cash_price AS cashPrice,
             pr.scraped_at AS scrapedAt
      FROM prices pr
@@ -105,7 +114,8 @@ export function getPriceHistory(productId: number): PricePoint[] {
      JOIN stores s ON s.id = l.store_id
      WHERE l.product_id = ?
      ORDER BY pr.scraped_at, pr.id`,
-  ).all(productId);
+    [productId],
+  );
 
   return rows as unknown as PricePoint[];
 }

@@ -53,10 +53,10 @@ export async function handleAuthRequest(
     return await finishLogin(req, url);
   }
   if (req.method === "GET" && url.pathname === "/auth/me") {
-    return currentUser(req, corsHeaders);
+    return await currentUser(req, corsHeaders);
   }
   if (req.method === "POST" && url.pathname === "/auth/logout") {
-    return logout(req, corsHeaders);
+    return await logout(req, corsHeaders);
   }
   return null; // not an auth route
 }
@@ -140,8 +140,8 @@ async function finishLogin(req: Request, url: URL): Promise<Response> {
     return redirectToFrontend("?login=error", clearTransient);
   }
 
-  const userId = upsertUser(profile);
-  const sessionId = createSession(userId);
+  const userId = await upsertUser(profile);
+  const sessionId = await createSession(userId);
 
   return redirectToFrontend("", [
     buildCookie(SESSION_COOKIE, sessionId, Math.floor(SESSION_MS / 1000)),
@@ -149,9 +149,12 @@ async function finishLogin(req: Request, url: URL): Promise<Response> {
   ]);
 }
 
-function currentUser(req: Request, corsHeaders: Record<string, string>): Response {
+async function currentUser(
+  req: Request,
+  corsHeaders: Record<string, string>,
+): Promise<Response> {
   const sessionId = getCookie(req, SESSION_COOKIE);
-  const user = sessionId ? getUserBySession(sessionId) : null;
+  const user = sessionId ? await getUserBySession(sessionId) : null;
 
   if (!user) {
     return Response.json(
@@ -162,9 +165,12 @@ function currentUser(req: Request, corsHeaders: Record<string, string>): Respons
   return Response.json(user, { headers: corsHeaders });
 }
 
-function logout(req: Request, corsHeaders: Record<string, string>): Response {
+async function logout(
+  req: Request,
+  corsHeaders: Record<string, string>,
+): Promise<Response> {
   const sessionId = getCookie(req, SESSION_COOKIE);
-  if (sessionId) deleteSession(sessionId);
+  if (sessionId) await deleteSession(sessionId);
 
   const headers = new Headers(corsHeaders);
   headers.append("Set-Cookie", buildCookie(SESSION_COOKIE, "", 0));

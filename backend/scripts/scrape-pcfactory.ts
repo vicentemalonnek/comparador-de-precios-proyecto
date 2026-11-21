@@ -1,4 +1,4 @@
-import { db } from "../src/db/client.ts";
+import { getDb } from "../src/db/client.ts";
 import { PcFactoryScraper } from "../src/scrapers/pcfactory.scraper.ts";
 import { saveScrapedProducts } from "../src/services/price.service.ts";
 
@@ -20,8 +20,8 @@ console.table(
   })),
 );
 
-const saved = saveScrapedProducts(
-  db,
+const saved = await saveScrapedProducts(
+  getDb(),
   { name: scraper.storeName, websiteUrl: "https://www.pcfactory.cl" },
   items,
 );

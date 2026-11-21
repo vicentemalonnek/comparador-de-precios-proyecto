@@ -1,4 +1,6 @@
-import { db } from "../src/db/client.ts";
+import { getDb } from "../src/db/client.ts";
+
+const db = getDb();
 
 interface BranchSeed {
   store: string;
@@ -32,12 +34,16 @@ for (const seed of seeds) {
     continue;
   }
 
-  db.prepare("INSERT OR IGNORE INTO stores (name, website_url) VALUES (?, ?)")
-    .run(seed.store, seed.websiteUrl);
-  const store = db.prepare("SELECT id FROM stores WHERE name = ?")
-    .get(seed.store) as unknown as { id: number };
+  await db.execute(
+    "INSERT OR IGNORE INTO stores (name, website_url) VALUES (?, ?)",
+    [seed.store, seed.websiteUrl],
+  );
+  const { rows } = await db.execute("SELECT id FROM stores WHERE name = ?", [
+    seed.store,
+  ]);
+  const storeId = Number(rows[0].id);
 
-  db.prepare(
+  await db.execute(
     `INSERT INTO store_branches (store_id, name, address, latitude, longitude, opening_hours)
      VALUES (?, ?, ?, ?, ?, ?)
      ON CONFLICT(store_id, name) DO UPDATE SET
@@ -45,13 +51,14 @@ for (const seed of seeds) {
        latitude = excluded.latitude,
        longitude = excluded.longitude,
        opening_hours = excluded.opening_hours`,
-  ).run(
-    store.id,
-    seed.name,
-    seed.address,
-    seed.latitude,
-    seed.longitude,
-    seed.openingHours ?? null,
+    [
+      storeId,
+      seed.name,
+      seed.address,
+      seed.latitude,
+      seed.longitude,
+      seed.openingHours ?? null,
+    ],
   );
   saved++;
 }
