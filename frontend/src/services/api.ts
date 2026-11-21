@@ -1,4 +1,7 @@
-export const API_URL = "http://localhost:8000";
+// Locally the backend runs on its own port. In production (Vercel) the backend
+// is a function on the same domain, so relative URLs such as "/api/..." work.
+export const API_URL: string = import.meta.env.VITE_API_URL ??
+  (import.meta.env.PROD ? "" : "http://localhost:8000");
 
 export type CategoryFilter = "all" | "cpu" | "ram" | "ssd";
 
