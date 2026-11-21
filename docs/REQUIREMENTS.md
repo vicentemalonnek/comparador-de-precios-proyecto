@@ -49,3 +49,4 @@ GPU was considered first, but the main source (PC Factory) lists almost none in 
 | 2026-10-31 | Scraping rules | One pass per day, pause between requests, identifying User-Agent, only factual data (name, price, availability, URL) |
 | 2026-11-14 | PC Express as second source with a hand-picked product list | Winpy and SP Digital block automated requests; PC Express exposes price, mpn and availability as JSON-LD; see docs/DATA_SOURCES.md |
 | 2026-11-16 | Geolocation: nearest branches, distance computed in the browser | Per-branch stock is not available (PC Factory disallows its per-store stock route in robots.txt); user location never reaches the server |
+| 2026-11-21 | Deploy on Vercel with Turso as the database | Deno Deploy no longer accepts new sign-ups (it closes in April 2027); Turso keeps the SQLite schema; the backend runs as a Vercel Function on the same domain as the frontend |

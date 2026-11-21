@@ -2,6 +2,8 @@
 
 Web app that compares prices of PC components (processors, RAM and SSDs) across Chilean stores, keeps a price history and shows the nearest store branches. Individual project for TICS316 Software Design (UAI), topic 4B.
 
+**Live app:** https://comparador-de-precios-proyecto-vm-8892.vercel.app
+
 ## Features
 
 - **Cross-store comparison:** the same product is grouped across stores and the cheapest offer is highlighted.
@@ -17,13 +19,16 @@ Web app that compares prices of PC components (processors, RAM and SSDs) across 
 
 | Part | Technology |
 |------|------------|
-| Backend | Deno, `Deno.serve`, SQLite (`node:sqlite`) |
+| Backend | Deno locally; the same code runs as a Vercel Function in production |
+| Database | Turso (SQLite in the cloud), reached through its HTTP API |
 | Frontend | React 19, Vite, TypeScript, react-i18next |
 | Auth | Google OAuth 2.0 (PKCE) |
+| Hosting | Vercel (frontend and backend on the same domain) |
 
 ## Requirements
 
 - [Deno](https://deno.com) 2.x
+- A [Turso](https://turso.tech) database (URL and auth token)
 - A Google OAuth client (only for login)
 
 ## Setup
@@ -48,16 +53,19 @@ Fill in `.env`:
 | `GOOGLE_CLIENT_SECRET` | Google OAuth client secret (never commit it) |
 | `BACKEND_URL` | `http://localhost:8000` |
 | `FRONTEND_URL` | `http://localhost:5173` |
+| `TURSO_DATABASE_URL` | `libsql://...turso.io` URL of the database |
+| `TURSO_AUTH_TOKEN` | Turso token with read and write access (never commit it) |
 
 In the Google Cloud console, add `http://localhost:8000/auth/google/callback` to the authorized redirect URIs of the client.
 
 ```bash
+deno task migrate         # create the tables in Turso (safe to run again)
 deno task seed:branches   # load store branches (once)
 deno task scrape:all      # fetch prices (run once a day to build history)
 deno task dev             # API at http://localhost:8000
 ```
 
-The database is created automatically at startup and the migrations in `backend/src/db/migrations` run in order.
+The migrations in `backend/src/db/migrations` use `IF NOT EXISTS`, so `deno task migrate` can be run again safely. `deno task db:copy-local` copies an old local `data/app.db` into Turso, keeping the ids and the price history.
 
 ### Frontend
 
@@ -82,6 +90,18 @@ Open the app at `http://localhost:5173` (not `127.0.0.1`) so the session cookie 
 | `deno task test` | frontend | Unit tests for distance calculation |
 | `deno task lint` | frontend | ESLint |
 | `deno task build` | frontend | Type-check and production build |
+
+## Deployment
+
+The Vercel project builds the `frontend` folder:
+
+1. The `build` script bundles `backend/src/app.ts` into `frontend/server/backend.js` with rolldown, then builds the React app.
+2. `frontend/api/index.ts` is a Vercel Function that runs that same backend handler.
+3. `frontend/vercel.json` sends `/api/*`, `/auth/*` and `/health` to the function, so the page and the API share one domain and the session cookie works without CORS.
+
+Environment variables in Vercel: `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` (sensitive) and `BACKEND_URL` / `FRONTEND_URL` (the public URL). The public URL plus `/auth/google/callback` must be an authorized redirect URI of the Google client. Every push to `main` deploys to production.
+
+The scrapers keep running on a local computer (see below) and write straight to Turso, so the live site shows the new prices without a redeploy.
 
 ## Daily scraping
 
@@ -113,11 +133,15 @@ The output of every run is appended to `backend/data/scrape.log`. The task only 
 
 ```
 backend/
-  main.ts            HTTP server and routes
-  src/db/            SQLite client and migrations
+  main.ts            Local server (Deno.serve)
+  src/app.ts         HTTP routes, shared by the local server and Vercel
+  src/db/            Turso HTTP client and migrations
   src/scrapers/      Polite fetcher, base scraper, one scraper per store
   src/services/      Prices, products, matching, auth, branches
-  scripts/           Scraper and seed entry points
+  scripts/           Scrapers, seed, migrations and data copy
+frontend/
+  api/index.ts       Vercel Function that runs the backend
+  vercel.json        Rewrites /api, /auth and /health to the function
 frontend/src/
   pages/ components/ hooks/ services/ utils/ i18n/ styles/
 docs/
@@ -128,7 +152,9 @@ docs/
 
 ## Design decisions
 
-- **SQLite:** a single file with no setup, and a relational model that fits price history.
+- **SQLite, then Turso:** SQLite gave a relational model that fits price history. To deploy it, the same schema moved to Turso, a hosted SQLite, so the SQL did not change.
+- **No database library:** the backend talks to Turso with `fetch` over its HTTP API (`backend/src/db/client.ts`), so the same code runs in Deno and in Node (Vercel) without dependency problems.
+- **One domain:** the backend runs as a Vercel Function next to the frontend, which keeps the login cookie first-party and removes CORS in production.
 - **Append-only prices:** history comes for free; the latest price is the newest row.
 - **Conservative matching:** two offers are merged only when each store has exactly one candidate with the same model key, so a wrong match is less likely than a missed one.
 - **Polite scraping:** we stop on 401/403/429/503 and never try to bypass anti-bot protection. SP Digital and Winpy were discarded for that reason (see `docs/DATA_SOURCES.md`).
@@ -138,15 +164,15 @@ The full decisions log is in `docs/REQUIREMENTS.md`.
 
 ## Project status
 
-Done: two scrapers with a daily scheduled run, price history, comparison across stores, Google login, i18n (es/en), geolocation with nearest branch, unit tests for matching and distance (the tests found and fixed a bug: SSD capacities such as 480GB were not recognized).
+Done: deployed on Vercel with a Turso database, two scrapers with a daily scheduled run, price history, comparison across stores, Google login, i18n (es/en), geolocation with nearest branch, unit tests for matching and distance (the tests found and fixed a bug: SSD capacities such as 480GB were not recognized).
 
 Known limits:
 - Only 2 stores; the other candidates block automated requests.
-- No per-branch stock (PC Factory disallows that route in its `robots.txt`) and no opening hours yet.
+- No per-branch stock (PC Factory disallows that route in its `robots.txt`); branch opening hours are entered by hand in `backend/seed/branches.json`, not scraped.
 - Some product names from PC Factory are derived from the URL and look rough.
-- Runs locally; not deployed yet.
+- The scrapers run on a personal computer, so the history only grows on days it is on.
 
-Next: deployment.
+Next: more stores if one allows automated requests, and trimming whitespace in some PC Factory URLs.
 
 ## Credits
 
