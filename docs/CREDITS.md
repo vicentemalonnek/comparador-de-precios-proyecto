@@ -10,7 +10,7 @@ React, Vite, i18next / react-i18next, Deno (including its built-in node:sqlite m
 
 ## Data sources
 
-Product names and prices come from PC Factory (pcfactory.cl) and PC Express (tienda.pc-express.cl). Every product links back to the original page.
+Product names and prices come from PC Factory (pcfactory.cl), PC Express (tienda.pc-express.cl) and Infor-Ingen (store.infor-ingen.com). Every product links back to the original page.
 
 ## Reference
 

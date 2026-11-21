@@ -7,7 +7,7 @@ Web app that compares prices of PC components (processors, RAM and SSDs) across 
 ## Features
 
 - **Cross-store comparison:** the same product is grouped across stores and the cheapest offer is highlighted.
-- **Scrapers for 2 stores:** PC Factory (internal price API) and PC Express (JSON-LD from a hand-picked product list). One pass per day, with pauses between requests and an identifying User-Agent.
+- **Scrapers for 3 stores:** PC Factory (internal price API), PC Express (JSON-LD in the product pages) and Infor-Ingen (public WooCommerce Store API), each from a hand-picked product list. One pass per day, with pauses between requests and an identifying User-Agent.
 - **Price and stock history:** every scrape appends a row, so prices are never overwritten. The product page shows a line chart.
 - **Google login (SSO):** OAuth 2.0 authorization code flow with PKCE, server-side sessions and an HttpOnly cookie.
 - **Geolocation:** the browser computes the distance to each store branch (Haversine). The user's location is never sent to the server.
@@ -84,7 +84,9 @@ Open the app at `http://localhost:5173` (not `127.0.0.1`) so the session cookie 
 | `deno task dev` | backend | API with auto-reload |
 | `deno task scrape:pcfactory` | backend | Scrape PC Factory |
 | `deno task scrape:pcexpress` | backend | Scrape PC Express |
-| `deno task scrape:all` | backend | Scrape both stores |
+| `deno task scrape:inforingen` | backend | Scrape Infor-Ingen (`--dry-run` only prints) |
+| `deno task scrape:all` | backend | Scrape the three stores |
+| `deno task report` | backend | Summary of the database: products per store, days of history, comparisons |
 | `deno task seed:branches` | backend | Load branches from `seed/branches.json` |
 | `deno task test` | backend | Unit tests for product matching |
 | `deno task test` | frontend | Unit tests for distance calculation |
@@ -164,10 +166,10 @@ The full decisions log is in `docs/REQUIREMENTS.md`.
 
 ## Project status
 
-Done: deployed on Vercel with a Turso database, two scrapers with a daily scheduled run, price history, comparison across stores, Google login, i18n (es/en), geolocation with nearest branch, unit tests for matching and distance (the tests found and fixed a bug: SSD capacities such as 480GB were not recognized).
+Done: deployed on Vercel with a Turso database, scrapers for three stores with a daily scheduled run (20 products compared across all three), price history, comparison across stores, Google login, i18n (es/en), geolocation with nearest branch, unit tests for matching and distance (the tests found and fixed a bug: SSD capacities such as 480GB were not recognized).
 
 Known limits:
-- Only 2 stores; the other candidates block automated requests.
+- SP Digital and Winpy block automated requests, so they are not included.
 - No per-branch stock (PC Factory disallows that route in its `robots.txt`); branch opening hours are entered by hand in `backend/seed/branches.json`, not scraped.
 - Some product names from PC Factory are derived from the URL and look rough.
 - The scrapers run on a personal computer, so the history only grows on days it is on.

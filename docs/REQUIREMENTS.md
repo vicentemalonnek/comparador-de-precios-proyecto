@@ -15,21 +15,21 @@ GPU was considered first, but the main source (PC Factory) lists almost none in 
 ## Functional requirements
 
 ### Price search and comparison
-- [ ] Compare prices across at least 3 sources (stores).
-- [ ] Price history to detect trends.
+- [x] Compare prices across at least 3 sources (stores): PC Factory, PC Express and Infor-Ingen.
+- [x] Price history to detect trends.
 
 ### Availability by schedule, stock and location
-- [ ] Scraper to determine store opening hours and relevant dates.
-- [ ] Scrapers to check stock.
-- [ ] Geolocation to show nearby availability.
+- [ ] Scraper to determine store opening hours and relevant dates. Opening hours are entered by hand in `backend/seed/branches.json`; no store publishes them in a scrapable way.
+- [x] Scrapers to check stock (per store; per-branch stock is not available).
+- [x] Geolocation to show nearby availability.
 
 ## General technical requirements
 
-- [ ] Fully responsive, adapting to any screen size.
-- [ ] SSO for login.
-- [ ] Custom multi-language support (no external APIs such as Google Translate). Base in place: Spanish and English files; more screens to translate.
+- [x] Fully responsive, adapting to any screen size.
+- [x] SSO for login (Google).
+- [x] Custom multi-language support (no external APIs such as Google Translate): Spanish and English.
 - [x] Code in English following good practices (ongoing).
-- [ ] Code from others or generated with AI credited in `CREDITS.md`.
+- [x] Code from others or generated with AI credited in `CREDITS.md`.
 - [x] At least one commit every week (Monday to Sunday), starting Monday, October 5 (ongoing).
 
 ## Evaluation
@@ -49,4 +49,5 @@ GPU was considered first, but the main source (PC Factory) lists almost none in 
 | 2026-10-31 | Scraping rules | One pass per day, pause between requests, identifying User-Agent, only factual data (name, price, availability, URL) |
 | 2026-11-14 | PC Express as second source with a hand-picked product list | Winpy and SP Digital block automated requests; PC Express exposes price, mpn and availability as JSON-LD; see docs/DATA_SOURCES.md |
 | 2026-11-16 | Geolocation: nearest branches, distance computed in the browser | Per-branch stock is not available (PC Factory disallows its per-store stock route in robots.txt); user location never reaches the server |
+| 2026-11-21 | Infor-Ingen as third source, through its WooCommerce Store API | Its robots.txt only blocks named AI and scraping bots; the pages have no Product JSON-LD but the public Store API returns name, prices and stock; see docs/DATA_SOURCES.md |
 | 2026-11-21 | Deploy on Vercel with Turso as the database | Deno Deploy no longer accepts new sign-ups (it closes in April 2027); Turso keeps the SQLite schema; the backend runs as a Vercel Function on the same domain as the frontend |

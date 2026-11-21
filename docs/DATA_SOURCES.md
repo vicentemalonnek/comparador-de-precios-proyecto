@@ -58,6 +58,15 @@ curl.exe -s -L -A "Mozilla/5.0" -o test.html -w "status: %{http_code}  bytes: %{
 - An AI-generated summary says no terms of use with clauses about bots were found; not verified against original texts.
 - Usage rules: one request per product, a few seconds between requests, one pass per day, identifying `User-Agent`, only factual data and a link to the source page.
 
+## Infor-Ingen (store.infor-ingen.com): viable
+
+- `robots.txt` (on `store.infor-ingen.com`, not `www`): it only lists named bots, mostly AI crawlers and scraping frameworks (GPTBot, ClaudeBot, CCBot, Scrapy, etc.), with `Disallow: /`. There is no `User-agent: *` group, so other bots are allowed. Our scraper identifies itself as `PCPriceComparatorBot`, which is not on the list. No `Crawl-delay`.
+- The product pages have two `ld+json` blocks, but none of type `Product`, so the JSON-LD approach used for PC Express does not work here.
+- The store runs WooCommerce and its public Store API answers plain requests: `/wp-json/wc/store/v1/products?slug=<slug>` returns **200** with id, name, SKU, stock (`is_in_stock`) and prices (`price`, `regular_price`, `currency_minor_unit`). It is the same JSON the store's own cart uses.
+- Two prices: `regular_price` is the normal price and `price` is lower (for example 434,494 vs 409,900, about 6%), probably the transfer price. Stored like PC Factory: normal price in `price`, the lower one in `cash_price`.
+- Decision: hand-picked list of product page URLs (`backend/src/scrapers/lists/inforingen-products.json`, 213 products); the scraper takes the slug from each URL and asks the Store API. One request per product, 3 seconds apart, one pass per day.
+- First run (2026-11-21): 212 of 213 products saved; 20 products matched in all three stores.
+
 ## Notes
 
 - `product:mfr_part_no` (manufacturer part number) is useful to match the same product across stores. Idea: add an `mpn` column to `products`.
