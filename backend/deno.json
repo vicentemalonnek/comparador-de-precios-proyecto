@@ -7,7 +7,9 @@
     "db:copy-local": "deno run --env-file=.env --allow-net --allow-env --allow-read --allow-write scripts/copy-local-to-turso.ts",
     "scrape:pcfactory": "deno run --env-file=.env --allow-net --allow-env --allow-read scripts/scrape-pcfactory.ts",
     "scrape:pcexpress": "deno run --env-file=.env --allow-net --allow-env --allow-read scripts/scrape-pcexpress.ts",
-    "scrape:all": "deno task scrape:pcfactory && deno task scrape:pcexpress",
-    "seed:branches": "deno run --env-file=.env --allow-net --allow-env --allow-read scripts/seed-branches.ts"
+    "scrape:inforingen": "deno run --env-file=.env --allow-net --allow-env --allow-read scripts/scrape-inforingen.ts",
+    "scrape:all": "deno task scrape:pcfactory && deno task scrape:pcexpress && deno task scrape:inforingen",
+    "seed:branches": "deno run --env-file=.env --allow-net --allow-env --allow-read scripts/seed-branches.ts",
+    "report": "deno run --env-file=.env --allow-net --allow-env --allow-read scripts/report.ts"
   }
 }
