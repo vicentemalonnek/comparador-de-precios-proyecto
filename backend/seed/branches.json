@@ -52,5 +52,14 @@
     "latitude": -33.43380295550578,
     "longitude": -70.6237302883553,
     "openingHours": "Lun-Vie 9:30-14:00, 15:00-18:30"
+  },
+    {
+    "store": "Infor-Ingen",
+    "websiteUrl": "https://store.infor-ingen.com",
+    "name": "Casa Matriz",
+    "address": "San Diego 980, 8330929 Santiago, Región Metropolitana",
+    "latitude": -33.45813679968777,
+    "longitude": -70.64921434220166,
+    "openingHours": "Lun-Vie 10:30-18:00"
   }
 ]
