@@ -176,6 +176,10 @@ Known limits:
 
 Next: more stores if one allows automated requests, and trimming whitespace in some PC Factory URLs.
 
+## Continuous integration
+
+Every push runs `.github/workflows/test.yml` on GitHub Actions: `deno lint` and the backend tests, then the frontend tests. The result shows as a check next to each commit on GitHub. The tests use fake responses, so they need no database or secrets.
+
 ## Credits
 
 Libraries, data sources and AI assistance are listed in [docs/CREDITS.md](docs/CREDITS.md).
